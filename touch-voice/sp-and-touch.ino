@@ -1,30 +1,32 @@
-#define touch 5
+#define touch 5;
 int led = 13;
-int play_e = 2;
+int play_l = 2;
 
-void setup(){
-    //intialize console
-    Serial.begin(9600);
-    
-    //define outputs
-    pinmode(led, OUTPUT);
-    pinmode(play_e, OUTPUT);
-    
-    //define inputs
-    pinmode(touch, INPUT);
+void setup() {
+  //intialize console
+  Serial.begin(9600);
 
-    //set LEDs to LOW
-    digitalWrite(led, LOW);
-    digitalWrite(play_e, LOW);
+  //define outputs
+  pinMode(led, OUTPUT);
+  pinMode(play_l, OUTPUT);
+
+  //define inputs
+  pinMode(touch, INPUT);
+
+  //set LEDs to LOW
+  digitalWrite(led, LOW);
+  digitalWrite(play_l, LOW);
+  digitalWrite(touch, LOW);
 }
 
-void loop(){
+void loop() {
     if(digitalRead(touch)){
         Serial.println("Touched...");
         digitalWrite(led, HIGH);
-        digitalWrite(play_e, HIGH);
-        delay(8000);
+        digitalWrite(play_l, HIGH);
+        delay(3000);
+        digitalWrite(play_l, LOW);
+        delay(20);
         digitalWrite(led, LOW);
-        digitalWrite(play_e, LOW);
     }
 }

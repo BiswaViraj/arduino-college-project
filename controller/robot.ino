@@ -66,6 +66,8 @@ int CS =  12;
 int CLK = 11;
 //Speaker pins
 int play_l = 2;
+//Touch pins
+#define touch 5;
 
 void setup(){
     
@@ -73,6 +75,7 @@ void setup(){
     Blue.begin(9600);
     
     //Define input pins
+    pinMode(touch, INPUT);
 
     //Define output pins
     pinMode(backLight, OUTPUT);
@@ -99,6 +102,9 @@ void setup(){
     lc.clearDisplay(0);
 
     digitalWrite(play_l, LOW);
+
+    digitalWrite(touch, LOW);
+
 }
 
 void loop(){

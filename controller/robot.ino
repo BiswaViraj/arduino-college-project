@@ -3,6 +3,7 @@
 //Header inclusions
 #include <LiquidCrystal.h>
 #include <SoftwareSerial.h>
+#include <LedControl.h>
 
 //Global vars
 //LCD bytes
@@ -32,6 +33,24 @@ long int command4 = 91; //  Reverse
 long int command5 = 10; // stop
 char state = 0;
 
+//LED vars
+LedControl lc = LedControl(DIN, CLK, CS, 1);
+byte E[8] = {0x3C, 0x20, 0x20, 0x3C, 0x20, 0x20, 0x20, 0x3C};
+byte L[8] = {0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3E};
+byte C[8] = {0x1C, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x1C};
+byte T[8] = {0x7C, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10};
+byte R[8] = {0x38, 0x24, 0x24, 0x28, 0x30, 0x28, 0x24, 0x24};
+byte O[8] = {0x1C, 0x22, 0x22, 0x22, 0x22, 0x22, 0x22, 0x1C};
+byte N[8] = {0x42, 0x62, 0x52, 0x52, 0x4A, 0x46, 0x46, 0x42};
+byte I[8] = {0x38, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x38};
+byte S[8] = {0x1C, 0x20, 0x20, 0x10, 0x08, 0x04, 0x04, 0x38};
+byte H[8] = {0x22, 0x22, 0x22, 0x3E, 0x22, 0x22, 0x22, 0x22};
+byte U[8] = {0x22, 0x22, 0x22, 0x22, 0x22, 0x22, 0x22, 0x1C,};
+byte B[8] = {0x38, 0x24, 0x24, 0x38, 0x38, 0x24, 0x24, 0x38};
+byte smile[8] =   {0x3C, 0x42, 0xA5, 0x81, 0xA5, 0x99, 0x42, 0x3C};
+byte neutral[8] = {0x3C, 0x42, 0xA5, 0x81, 0xBD, 0x81, 0x42, 0x3C};
+byte frown[8] =   {0x3C, 0x42, 0xA5, 0x81, 0x99, 0xA5, 0x42, 0x3C};
+
 //Pin definitions
 int backlight = 13;
 //Motor pins
@@ -41,6 +60,10 @@ int in1 = 8;
 int in2 = 9;
 int in3 = 10;
 int in4 = 11;
+//LED pin
+int DIN = 13;
+int CS =  12;
+int CLK = 11;
 
 void setup(){
     
@@ -67,6 +90,10 @@ void setup(){
     analogWrite(ena, 255);
     analogWrite(enb, 255);
     delay(100);
+
+    lc.shutdown(0, false);
+    lc.setIntensity(0, 5);
+    lc.clearDisplay(0);
 }
 
 void loop(){
@@ -179,4 +206,71 @@ void smile(){
     /*lcd.createChar(13, b141);
     lcd.setCursor(14, 1);  
     lcd.write(byte(13));*/
+}
+
+void emotions(){
+    printByte(smile);
+    delay(1000);
+
+    printByte(neutral);
+    delay(1000);
+
+    printByte(frown);
+    delay(1000);
+
+    printByte(E);
+    delay(1000);
+
+    printByte(L);
+    delay(1000);
+
+    printByte(E);
+    delay(1000);
+
+    printByte(C);
+    delay(1000);
+
+    printByte(T);
+    delay(1000);
+
+    printByte(R);
+    delay(1000);
+
+    printByte(O);
+    delay(1000);
+
+    printByte(N);
+    delay(1000);
+
+    printByte(I);
+    delay(1000);
+
+    printByte(C);
+    delay(1000);
+
+    printByte(S);
+    delay(1000);
+
+    lc.clearDisplay(0);
+    delay(1000);
+
+    printByte(H);
+    delay(1000);
+
+    printByte(U);
+    delay(1000);
+
+    printByte(B);
+    delay(1000);
+
+    lc.clearDisplay(0);
+    delay(1000);
+}
+
+void printByte(byte character [])
+{
+  int i = 0;
+  for (i = 0; i < 8; i++)
+    lc.setRow(0, i, character[i]);
+
 }

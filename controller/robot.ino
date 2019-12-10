@@ -47,9 +47,9 @@ byte S[8] = {0x1C, 0x20, 0x20, 0x10, 0x08, 0x04, 0x04, 0x38};
 byte H[8] = {0x22, 0x22, 0x22, 0x3E, 0x22, 0x22, 0x22, 0x22};
 byte U[8] = {0x22, 0x22, 0x22, 0x22, 0x22, 0x22, 0x22, 0x1C,};
 byte B[8] = {0x38, 0x24, 0x24, 0x38, 0x38, 0x24, 0x24, 0x38};
-byte smile[8] =   {0x3C, 0x42, 0xA5, 0x81, 0xA5, 0x99, 0x42, 0x3C};
+byte smile[8] = {0x3C, 0x42, 0xA5, 0x81, 0xA5, 0x99, 0x42, 0x3C};
 byte neutral[8] = {0x3C, 0x42, 0xA5, 0x81, 0xBD, 0x81, 0x42, 0x3C};
-byte frown[8] =   {0x3C, 0x42, 0xA5, 0x81, 0x99, 0xA5, 0x42, 0x3C};
+byte frown[8] = {0x3C, 0x42, 0xA5, 0x81, 0x99, 0xA5, 0x42, 0x3C};
 
 //Pin definitions
 int backlight = 13;
@@ -60,10 +60,12 @@ int in1 = 8;
 int in2 = 9;
 int in3 = 10;
 int in4 = 11;
-//LED pin
+//LED pins
 int DIN = 13;
 int CS =  12;
 int CLK = 11;
+//Speaker pins
+int play_l = 2;
 
 void setup(){
     
@@ -81,6 +83,7 @@ void setup(){
     pinMode(in3, OUTPUT);
     pinMode(in4, OUTPUT);
 
+    pinMode(play_l, OUTPUT);
 
     //Initialize devices
     digitalWrite(backLight, HIGH);
@@ -94,6 +97,8 @@ void setup(){
     lc.shutdown(0, false);
     lc.setIntensity(0, 5);
     lc.clearDisplay(0);
+
+    digitalWrite(play_l, LOW);
 }
 
 void loop(){
@@ -102,7 +107,7 @@ void loop(){
 }
 
 void movement(int move){
-    if (move == command1) // Forward
+    if(move == command1) // Forward
     {
     digitalWrite(in1, HIGH);
     digitalWrite(in2, LOW);
@@ -269,8 +274,15 @@ void emotions(){
 
 void printByte(byte character [])
 {
-  int i = 0;
-  for (i = 0; i < 8; i++)
-    lc.setRow(0, i, character[i]);
+    int i = 0;
+    for (i = 0; i < 8; i++)
+        lc.setRow(0, i, character[i]);
+}
 
+void play_audio(){
+    digitalWrite(led, HIGH);
+    digitalWrite(play_l, HIGH);
+    delay(3000);
+    digitalWrite(play_l, LOW);
+    digitalWrite(led, LOW);
 }

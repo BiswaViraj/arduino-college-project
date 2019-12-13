@@ -27,10 +27,10 @@ byte b141[] = {B00001,B00010,B00010,B00100,B00110,B01010,B01001,B10001};
 SoftwareSerial Blue(2,3);
 long int data;
 long int command1 = 92;// forward
-long int command2 = 79; // left
-long int command3 = 71; //  right
-long int command4 = 91; //  Reverse
-long int command5 = 10; // stop
+long int command2 = 87; // left
+long int command3 = 65; //  right
+long int command4 = 79; //  Reverse
+long int command5 = 26; // stop
 char state = 0;
 
 //LED vars
